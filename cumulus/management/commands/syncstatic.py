@@ -21,12 +21,14 @@ class Command(BaseCommand):
     )
 
     # settings from cumulus.settings
-    USERNAME         = CUMULUS['USERNAME']
-    API_KEY          = CUMULUS['API_KEY']
-    STATIC_CONTAINER = CUMULUS['STATIC_CONTAINER']
-    USE_SERVICENET   = CUMULUS['SERVICENET']
-    FILTER_LIST      = CUMULUS['FILTER_LIST']
-    AUTH_URL         = CUMULUS['AUTH_URL']
+    USERNAME                = CUMULUS['USERNAME']
+    API_KEY                 = CUMULUS['API_KEY']
+    STATIC_CONTAINER        = CUMULUS['STATIC_CONTAINER']
+    USE_SERVICENET          = CUMULUS['SERVICENET']
+    FILTER_LIST             = CUMULUS['FILTER_LIST']
+    AUTH_URL                = CUMULUS['AUTH_URL']
+    SYNC_PURGE              = CUMULUS['SYNC_PURGE']
+    PURGE_NOTIFICATION_LIST = CUMULUS['PURGE_NOTIFICATION_LIST']
 
     # paths
     DIRECTORY        = os.path.abspath(settings.STATIC_ROOT)
@@ -124,6 +126,8 @@ class Command(BaseCommand):
 
             if not self.test_run:
                 cloud_obj.load_from_filename(file_path)
+                if self.SYNC_PURGE:
+                    cloud_obj.purge(','.join(self.PURGE_NOTIFICATION_LIST))
             self.upload_count += 1
             if self.verbosity > 1:
                 print "Uploaded", cloud_obj.name

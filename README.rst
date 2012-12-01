@@ -7,3 +7,9 @@ Documentation
 *************
 
 For full documentation, go to http://django-cumulus.rtfd.org/.
+
+Fork?
+*****
+
+This fork is intended to add purge support to the syncstatic command.
+
