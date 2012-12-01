@@ -29,6 +29,7 @@ class Command(BaseCommand):
     AUTH_URL                = CUMULUS['AUTH_URL']
     SYNC_PURGE              = CUMULUS['SYNC_PURGE']
     PURGE_NOTIFICATION_LIST = CUMULUS['PURGE_NOTIFICATION_LIST']
+    DELETE_ORPHANS          = CUMULUS['DELETE_ORPHANS']
 
     # paths
     DIRECTORY        = os.path.abspath(settings.STATIC_ROOT)
