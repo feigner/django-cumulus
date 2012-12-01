@@ -127,7 +127,7 @@ class Command(BaseCommand):
             if not self.test_run:
                 cloud_obj.load_from_filename(file_path)
                 if self.SYNC_PURGE:
-                    cloud_obj.purge(','.join(self.PURGE_NOTIFICATION_LIST))
+                    cloud_obj.purge_from_cdn(','.join(self.PURGE_NOTIFICATION_LIST))
             self.upload_count += 1
             if self.verbosity > 1:
                 print "Uploaded", cloud_obj.name
