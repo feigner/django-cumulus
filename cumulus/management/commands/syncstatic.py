@@ -135,10 +135,11 @@ class Command(BaseCommand):
 
     def delete_files(self):
         # remove any objects on the cloud that don't exist locally
-        for cloud_name in self.container.list_objects():
-            if cloud_name not in self.local_object_names:
-                self.delete_count += 1
-                if self.verbosity > 1:
-                    print "Deleted %s" % cloud_name
-                if not self.test_run:
-                    self.container.delete_object(cloud_name)
+        if self.DELETE_ORPHANS:
+            for cloud_name in self.container.list_objects():
+                if cloud_name not in self.local_object_names:
+                    self.delete_count += 1
+                    if self.verbosity > 1:
+                        print "Deleted %s" % cloud_name
+                    if not self.test_run:
+                        self.container.delete_object(cloud_name)
