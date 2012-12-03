@@ -15,6 +15,7 @@ CUMULUS = {
     'STATIC_CONTAINER': None,
     'FILTER_LIST': [],
     'SYNC_PURGE': False,
+    'CONTAINER_PURGE': False,
     'PURGE_NOTIFICATION_LIST': [],
     'DELETE_ORPHANS': True
 }

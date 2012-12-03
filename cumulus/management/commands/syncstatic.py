@@ -28,6 +28,7 @@ class Command(BaseCommand):
     FILTER_LIST             = CUMULUS['FILTER_LIST']
     AUTH_URL                = CUMULUS['AUTH_URL']
     SYNC_PURGE              = CUMULUS['SYNC_PURGE']
+    CONTAINER_PURGE         = CUMULUS['CONTAINER_PURGE']
     PURGE_NOTIFICATION_LIST = CUMULUS['PURGE_NOTIFICATION_LIST']
     DELETE_ORPHANS          = CUMULUS['DELETE_ORPHANS']
 
@@ -87,7 +88,10 @@ class Command(BaseCommand):
 
         # print out the final tally to the cmd line
         self.update_count = self.upload_count - self.create_count
-        print
+
+        if self.CONTAINER_PURGE:
+            self.container.purge_from_cdn(','.join(self.PURGE_NOTIFICATION_LIST))
+
         if self.test_run:
             print "Test run complete with the following results:"
         print "Skipped %d. Created %d. Updated %d. Deleted %d." % (
