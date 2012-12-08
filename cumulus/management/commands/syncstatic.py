@@ -118,6 +118,7 @@ class Command(BaseCommand):
                 self.create_count += 1
             except ssl.SSLError, e:
                 print "Caught error getting object: %s \n\n%s" % (object_name, e)
+                continue
 
             cloud_datetime = (cloud_obj.last_modified and
                               datetime.datetime.strptime(
