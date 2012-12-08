@@ -1,3 +1,4 @@
+import ssl
 import datetime
 import optparse
 import os
@@ -115,6 +116,8 @@ class Command(BaseCommand):
             except cloudfiles.errors.NoSuchObject:
                 cloud_obj = self.container.create_object(object_name)
                 self.create_count += 1
+            except ssl.SSLError, e:
+                print "Caught error getting object: %s \n\n%s" % (object_name, e)
 
             cloud_datetime = (cloud_obj.last_modified and
                               datetime.datetime.strptime(
@@ -130,7 +133,17 @@ class Command(BaseCommand):
                 continue
 
             if not self.test_run:
-                cloud_obj.load_from_filename(file_path)
+
+                # sorry
+                try:
+                    cloud_obj.load_from_filename(file_path)
+                except ssl.SSLError, e:
+                    try:
+                        cloud_obj.load_from_filename(file_path)
+                    except Exception:
+                        pass
+                    print "Caught error getting object: %s \n\n%s" % (object_name, e)
+
                 if self.SYNC_PURGE:
                     try:
                         cloud_obj.purge_from_cdn(','.join(self.PURGE_NOTIFICATION_LIST))
