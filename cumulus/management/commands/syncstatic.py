@@ -102,6 +102,8 @@ class Command(BaseCommand):
         # upload or skip items
         for item in names:
             if item in self.FILTER_LIST:
+                # remove item from names, so that we can ignore directories
+                names.remove(item)
                 continue # Skip files we don't want to sync
 
             file_path = os.path.join(dirname, item)
